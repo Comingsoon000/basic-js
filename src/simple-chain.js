@@ -1,26 +1,35 @@
-const CustomError = require("../extensions/custom-error");
-
 const chainMaker = {
+  links: [],
+  result: '',
+
   getLength() {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    return this.links.length;
   },
-  addLink(value) {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+
+  addLink(value = '') {
+    this.links.push(`( ${value} )`);
+    return this;
   },
+
   removeLink(position) {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    if ((typeof position !== 'number') || (position > this.getLength()) || (position < 1)) {
+      this.links = [];
+      throw new Error('position is not a number, or a fractional number, or corresponding to a nonexistent link');
+    }
+    this.links = this.links.filter((item, index) => index + 1 !== position);
+    return this;
   },
+
   reverseChain() {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    this.links.reverse();
+    return this;
   },
+
   finishChain() {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
-  }
+    result = this.links.join('~~');
+    this.links = [];
+    return result;
+  },
 };
 
 module.exports = chainMaker;
